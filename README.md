@@ -1,1 +1,2 @@
-# adminfif
+# adminql
+Admin Simple SQL
