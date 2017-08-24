@@ -141,6 +141,7 @@ if ($dashboardTotal>0){
 							$('#columnActionAR_' + _id).html('-');
 						}
 						$('#dashboardFollowup').html(json.totalFollowUp);
+						$('#dashboardAccept').html(json.totalAccept);
 						checkFollowUp();
 					} else {
 						alert('[ERROR] Something went wrong!');
