@@ -36,7 +36,9 @@ $q = "
 		object_v,
 		dp,
 		angsuran,
-		top
+		top,
+		followup_status,
+		approvereject_status
 	FROM v_registrasi 
 	ORDER BY datetime_created ASC;
 ";
