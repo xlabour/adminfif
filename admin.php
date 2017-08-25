@@ -271,7 +271,7 @@ if ($dashboardTotal>0){
 						Download List Data as XLS <a href="./downloadlist.php">Download List</a>
 					</h6>
 					<table style='background-color: #ffe486; font-size:12px; font-family:tahoma' cellpadding='4' cellspacing='1' border='0'>
-						<tr><th>No.</th><th style='text-align:center'>Datetime (Descending)</th><th>Name</th><th>Phone</th><th>Address</th><th style='text-align:center'>View</th><th style='text-align:center'>Follow Up</th><th style='text-align:center'>Accept/Reject</th></tr>
+						<tr><th>No.</th><th style='text-align:center'>Tanggal Registrasi(Descending)</th><th>Nama</th><th>No Telp</th><th>Alamat</th><th style='text-align:center'>View</th><th style='text-align:center'>Follow Up</th><th style='text-align:center'>Accept/Reject</th></tr>
 						<?php
 						if ($dashboardTotal>0){
 							echo $body;
@@ -293,7 +293,7 @@ if ($dashboardTotal>0){
   <div class="modal-inner">
     <div class="modal-content">
       <div class="modal-close-icon">
-        <a href="javascript:closeModal();" class="close-modal"><i class="fa fa-times" aria-hidden="true"></i></a>
+        <a href="javascript:closeModal();" class="close-modal"> ✖ </a>
       </div>
       <div class="modal-content-inner">
         <h4>Detail</h4>
@@ -301,7 +301,7 @@ if ($dashboardTotal>0){
       </div>
       <!--hr class="modal-buttons-seperator"-->
       <div class="modal-buttons">
-        <button class="button button-primary close-modal" onclick="javascript:closeModal();">OK</button>
+        <button class="button button-primary" onclick="javascript:closeModal();">Close</button>
       </div>
     </div>
   </div>

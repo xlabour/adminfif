@@ -560,6 +560,12 @@ hr {
   opacity: 1;
   z-index: 1;
 }
+
+.modal .close-modal{
+	font-size:2.5em;
+	text-decoration: none
+}
+
 .modal .modal-inner {
   position: relative;
   display: flex;
