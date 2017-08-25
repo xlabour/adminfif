@@ -74,7 +74,7 @@ if ($dashboardTotal>0){
 		
 		
 		$body .= "<tr style='".$trStyle."'>";
-		$body .= "<td>".$i."</td><td style='text-align:center'>".$d['datetime_created']."</td><td>".$d['nama']."</td><td>".$d['notelp']."</td><td>".$d['alamat']."</td><td style='text-align:center'>".$actionfu."</td><td id=\"columnActionAR_".$d['uid']."\" style='text-align:center'>".$actionar."</td>";
+		$body .= "<td>".$i."</td><td style='text-align:center'>".$d['datetime_created']."</td><td>".$d['nama']."</td><td>".$d['notelp']."</td><td>".$d['alamat']."</td><td><button onclick=\"javascript:viewDetail('".$d['uid']."');\">View Detail</button></td><td style='text-align:center'>".$actionfu."</td><td id=\"columnActionAR_".$d['uid']."\" style='text-align:center'>".$actionar."</td>";
 		$body .= "</tr>";
 		
 	}
@@ -173,6 +173,43 @@ if ($dashboardTotal>0){
 			});
 		}
 		
+		viewDetail = function(_uid){
+			//alert(_uid);
+			$.ajax({
+				url:"./viewdetail.php?uid=" + _uid,
+				type:'get',
+				success:function(json){
+					contentTable = "";
+					contentTable += '<table>';
+					contentTable += '<tr><td style="text-align:right">Tanggal Register:</td><td style="text-align:left">' + json.datetime_created + '</td></tr>';
+					contentTable += '<tr><td style="text-align:right">Nama:</td><td style="text-align:left">' + json.nama + '</td></tr>';
+					contentTable += '<tr><td style="text-align:right">Tempat Tanggal Lahir:</td><td style="text-align:left">' + json.lahir_tempat + ', ' + json.lahir_tanggal + '</td></tr>';
+					contentTable += '<tr><td style="text-align:right">Alamat:</td><td style="text-align:left">' + json.alamat + '</td></tr>';
+					contentTable += '<tr><td style="text-align:right">No Telp:</td><td style="text-align:left">' + json.notelp + '</td></tr>';
+					contentTable += '<tr><td style="text-align:right">Jenis Kelamin:</td><td style="text-align:left">' + json.jenis_kelamin + '</td></tr>';
+					contentTable += '<tr><td style="text-align:right">Email:</td><td style="text-align:left">' + json.email + '</td></tr>';
+					contentTable += '<tr><td style="text-align:right">Pekerjaan:</td><td style="text-align:left">' + json.pekerjaan_v + '</td></tr>';
+					contentTable += '<tr><td style="text-align:right">Status Rumah:</td><td style="text-align:left">' + json.statusrumah_v + '</td></tr>';
+					contentTable += '<tr><td style="text-align:right">Pendidikan:</td><td style="text-align:left">' + json.pendidikan_v + '</td></tr>';
+					contentTable += '<tr><td style="text-align:right">Marital Status:</td><td style="text-align:left">' + json.maritalstatus_v + '</td></tr>';
+					contentTable += '<tr><td style="text-align:right">Tanggungan:</td><td style="text-align:left">' + json.tanggungan + '</td></tr>';
+					contentTable += '<tr><td style="text-align:right">Object:</td><td style="text-align:left">' + json.object_v + '</td></tr>';
+					contentTable += '<tr><td style="text-align:right">DP:</td><td style="text-align:left">' + json.dp + '</td></tr>';
+					contentTable += '<tr><td style="text-align:right">Angsuran:</td><td style="text-align:left">' + json.angsuran + '</td></tr>';
+					contentTable += '<tr><td style="text-align:right">TOP (Terms of Payment):</td><td style="text-align:left">' + json.top + '</td></tr>';
+					contentTable += '</table>';
+					$('#modal-content-area').html(contentTable);
+					var modal = document.querySelector('.modal');
+					modal.classList.toggle('modal-open');
+				}
+			});
+		}
+		
+		closeModal = function(){
+			var modal = document.querySelector('.modal');
+			modal.classList.toggle('modal-open');
+		}
+		
 		$(document).ready(function(){
 			checkFollowUp();
 		});
@@ -234,7 +271,7 @@ if ($dashboardTotal>0){
 						Download List Data as XLS <a href="./downloadlist.php">Download List</a>
 					</h6>
 					<table style='background-color: #ffe486; font-size:12px; font-family:tahoma' cellpadding='4' cellspacing='1' border='0'>
-						<tr><th>No.</th><th style='text-align:center'>Datetime (Descending)</th><th>Name</th><th>Phone</th><th>Address</th><th style='text-align:center'>Follow Up</th><th style='text-align:center'>Accept/Reject</th></tr>
+						<tr><th>No.</th><th style='text-align:center'>Datetime (Descending)</th><th>Name</th><th>Phone</th><th>Address</th><th style='text-align:center'>View</th><th style='text-align:center'>Follow Up</th><th style='text-align:center'>Accept/Reject</th></tr>
 						<?php
 						if ($dashboardTotal>0){
 							echo $body;
@@ -250,6 +287,26 @@ if ($dashboardTotal>0){
 		</center>
 	</div>
 </div>
+
+
+<div class="modal">
+  <div class="modal-inner">
+    <div class="modal-content">
+      <div class="modal-close-icon">
+        <a href="javascript:closeModal();" class="close-modal"><i class="fa fa-times" aria-hidden="true"></i></a>
+      </div>
+      <div class="modal-content-inner">
+        <h4>Detail</h4>
+        <div id="modal-content-area">Please wait, loading detail data...</div>  
+      </div>
+      <!--hr class="modal-buttons-seperator"-->
+      <div class="modal-buttons">
+        <button class="button button-primary close-modal" onclick="javascript:closeModal();">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <!-- End Document
   ------------------------- -->
