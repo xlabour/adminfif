@@ -4,33 +4,26 @@ header("Content-type: application/json");
 
 $t = isset($_POST['t'])?$_POST['t']:"";
 $h = isset($_SERVER['HTTP_X_FORWARDED_FOR'])?$_SERVER['HTTP_X_FORWARDED_FOR']:"";
+$uids = isset($_POST['uids'])?$_POST['uids']:"";
 
-if (($t!="" && $t===getenv('TOKEN_KEY')) && ($h!="" && $h===getenv('ACCEPTED_HOST'))){
+if (($t!="" && $t===getenv('TOKEN_KEY')) && ($h!="" && $h===getenv('ACCEPTED_HOST')) && $uids!=""){
 	include("./config.inc.php");
 	include("./dbconnect.inc.php");
 	
-	$q = "SELECT * FROM v_registrasi WHERE emailstatus_uid=0";
+	$q = "UPDATE t_registrasi SET emailstatus_uid=1 WHERE uid IN (".$uids.")";
 	$r = mysqli_query($dblink, $q) or die (mysql_error($dblink));
-	$arrItem = array();
-	while ($d=mysqli_fetch_assoc($r)){
-		$arrItem[] = $d;
-	}
 	$arrResponse = array(
 		"status" => true,
 		"msgCode" => "00",
-		"msg" => "Success",
-		"total" => count($arrItem),
-		"data" => $arrItem
+		"msg" => "Success"
 	);
 } else {
 	$arrResponse = array(
 		"status" => false,
 		"msgCode" => "04",
 		"msg" => "Unknown Error",
-		"total" => 0,
-		"data" => array(
-		)
 	);
 }
+
 echo json_encode($arrResponse);
 ?>
