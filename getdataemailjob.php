@@ -3,7 +3,8 @@ error_reporting(0);
 header("Content-type: application/json");
 
 $t = isset($_POST['t'])?$_POST['t']:"";
-if ($t!="" && $t===getenv('TOKEN_KEY')){
+$h = isset($_SERVER['HTTP_X_FORWARDED_FOR'])?$_SERVER['HTTP_X_FORWARDED_FOR']:"";
+if (($t!="" && $t===getenv('TOKEN_KEY')) && ($h!="" && $h===getenv('ACCEPTED_HOST'))){
 	include("./config.inc.php");
 	include("./dbconnect.inc.php");
 	
@@ -23,8 +24,8 @@ if ($t!="" && $t===getenv('TOKEN_KEY')){
 } else {
 	$arrDataRow = array(
 		"status" => true,
-		"msgCode" => "00",
-		"msg" => "Success",
+		"msgCode" => "04",
+		"msg" => "Error:" . $h,
 		"total" => 0,
 		"data" => array(
 		)
